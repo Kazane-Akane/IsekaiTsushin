@@ -3,6 +3,8 @@ class ChatApp {
     constructor() {
         this.socket = null;
         this.currentUser = null;
+        this.isReconnecting = false;
+        this.reconnectInterval = 3000; // 3秒后重新连接
         
         // DOM元素
         this.loginPage = document.getElementById('loginPage');
@@ -122,6 +124,10 @@ class ChatApp {
     }
     
     enterChat() {
+        if (this.isReconnecting) {
+            return;
+        }
+
         const username = this.usernameInput.value.trim();
         if (!username) {
             alert('Please enter your name');
@@ -129,15 +135,16 @@ class ChatApp {
         }
         if (username.length > 8) {
             alert('The username length is too long, please choose again!');
-             //username = username.substring(0, 5);
              return;
         }
         
         // 创建WebSocket连接
-        this.socket = new WebSocket('https://freechatroom.kazane.cloudns.club/');
+        this.socket = new WebSocket('ws://localhost:3000');
         
         // 连接建立时
         this.socket.onopen = () => {
+            console.log("WebSocket connected.");
+            this.isReconnecting = false;
             // 发送加入聊天室请求
             const avatarUrl = this.getAvatarUrl(this.selectedAvatar);
             
@@ -146,6 +153,10 @@ class ChatApp {
                 name: username,
                 avatar: avatarUrl
             }));
+
+            // 切换到聊天界面
+            this.loginPage.style.display = 'none';
+            this.chatPage.style.display = 'flex';
         };
         
         // 接收消息
@@ -170,15 +181,32 @@ class ChatApp {
             }
         };
         
-        // 错误处理
+        // 错误处理和重新连接
         this.socket.onerror = (error) => {
             console.error('WebSocketError:', error);
-            alert('Unable to connect to chat server, please make sure the server is started');
+            // 这里不显示alert，因为会不断弹窗
+            // alert('Unable to connect to chat server, please make sure the server is started');
+            this.reconnect();
         };
-        
-        // 切换到聊天界面
-        this.loginPage.style.display = 'none';
-        this.chatPage.style.display = 'flex';
+
+        // 连接关闭时重新连接
+        this.socket.onclose = (event) => {
+            console.log(`WebSocket closed with code ${event.code}, reason: ${event.reason}`);
+            this.reconnect();
+        };
+    }
+
+    reconnect() {
+        if (this.isReconnecting) {
+            return;
+        }
+        this.isReconnecting = true;
+        console.log(`尝试在 ${this.reconnectInterval / 1000} 秒后重新连接...`);
+        this.addSystemMessage(`与服务器的连接已断开，正在尝试重新连接...`);
+        setTimeout(() => {
+            this.isReconnecting = false;
+            this.enterChat();
+        }, this.reconnectInterval);
     }
     
             getAvatarUrl(avatarId) {
@@ -201,7 +229,17 @@ class ChatApp {
     updateUserList(users) {
         this.userList.innerHTML = '';
         
-        users.forEach(user => {
+        // 确保当前用户始终排在第一位
+        const sortedUsers = [...users];
+        if (this.currentUser) {
+            const currentUserIndex = sortedUsers.findIndex(u => u.id === this.currentUser.id);
+            if (currentUserIndex > -1) {
+                const currentUserData = sortedUsers.splice(currentUserIndex, 1)[0];
+                sortedUsers.unshift(currentUserData);
+            }
+        }
+
+        sortedUsers.forEach(user => {
             const userElement = document.createElement('div');
             userElement.className = 'user-item';
             userElement.innerHTML = `
@@ -229,7 +267,7 @@ class ChatApp {
     
     // 修改 sendMessage 函数，它现在接收类型和内容
     sendMessage(type = 'text', content = this.messageInput.value.trim()) {
-        if (!content || !this.currentUser) return;
+        if (!content || !this.currentUser || this.socket.readyState !== WebSocket.OPEN) return;
         
         this.socket.send(JSON.stringify({
             type: 'message',
