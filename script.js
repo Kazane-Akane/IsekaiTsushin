@@ -201,8 +201,8 @@ class ChatApp {
             return;
         }
         this.isReconnecting = true;
-        console.log(`尝试在 ${this.reconnectInterval / 1000} 秒后重新连接...`);
-        this.addSystemMessage(`与服务器的连接已断开，正在尝试重新连接...`);
+        console.log(`Attempting to reconnect in ${this.reconnectInterval / 1000} seconds...`);
+        this.addSystemMessage(`The connection to the server has been lost. Attempting to reconnect...`);
         setTimeout(() => {
             this.isReconnecting = false;
             this.enterChat();
@@ -347,4 +347,5 @@ class ChatApp {
 document.addEventListener('DOMContentLoaded', () => {
     new ChatApp();
 });
+
 
