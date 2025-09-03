@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ヰ世界通信</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+<body>
+    <div class="container">
+        <div class="login-container" id="loginPage">
+            <div class="login-form">
+            <img src="https://p1.music.126.net/PDsODg72ME1sJYAiLW5xDw==/109951170173411821.jpg" alt="logo">
+                <h2 class="login-title">ヰ世界通信</h2>
+                <div class="form-group">
+                    <label for="username">Your name</label>
+                    <input type="text" id="username" class="form-control" placeholder="Please enter your name" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Select avatar</label>
+                    <div class="avatar-selection">
+                        <div class="avatar-option" data-avatar="1">
+                            <img src="https://p1.music.126.net/cl_6SwF57UWPxOzbv2steg==/109951171936425135.jpg" alt="Avatar 1">
+                        </div>
+                        <div class="avatar-option" data-avatar="2">
+                            <img src="https://p1.music.126.net/xNH-pTlvcRmh3U8WJS7JNQ==/109951171825877344.jpg" alt="Avatar 2">
+                        </div>
+                        <div class="avatar-option" data-avatar="3">
+                            <img src="https://p1.music.126.net/PDsODg72ME1sJYAiLW5xDw==/109951170173411821.jpg" alt="Avatar 3">
+                        </div>
+                        <div class="avatar-option" data-avatar="4">
+                            <img src="https://p1.music.126.net/hCIRndMWE4y9qMJ3xjaQsg==/109951170512328679.jpg" alt="Avatar 4">
+                        </div>
+                        <div class="avatar-option" data-avatar="5">
+                            <img src="https://p1.music.126.net/XaeSAXURRaEe5OYAKoPtug==/109951169221164186.jpg" alt="Avatar 5">
+                        </div>
+                        <div class="avatar-option" data-avatar="6">
+                            <img src="https://p1.music.126.net/JlpHimpMHKeTeeVU9XpzXQ==/109951170533289194.jpg" alt="Avatar 6">
+                        </div>
+                        <div class="avatar-option" data-avatar="7">
+                            <img src="https://p1.music.126.net/Jb91HRHEIdMDv8SeK34YTw==/109951171933714711.jpg" alt="Avatar 7">
+                        </div>
+                        <div class="avatar-option" data-avatar="8">
+                            <img src="https://p1.music.126.net/6P5L-GB2Dd_5JxVgWMHLiQ==/109951170514367223.jpg" alt="Avatar 8">
+                         </div>
+                        <div class="avatar-option" data-avatar="9">
+                            <img src="https://p1.music.126.net/vPlsVKWVMkLQOeBFn6HCZw==/109951171315280436.jpg" alt="Avatar 9">
+                        </div>
+                        <div class="avatar-option" data-avatar="10">
+                            <img src="https://p1.music.126.net/US1Ml1rhSTS2AneXsCoYyQ==/109951170921557573.jpg" alt="Avatar 10">
+                        </div>
+                       
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="enterChat">Enter the chat room</button>
+            </div>
+        </div>
+
+        <div class="chat-container" id="chatPage">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h3 class="sidebar-title">Online users</h3>
+                </div>
+                <div class="user-list" id="userList">
+                    </div>
+            </div>
+            <div class="chat-main">
+                <div class="chat-header">
+                    <h2 class="chat-title">ヰ世界通信</h2>
+                    <div class="online-count">
+                        <span id="onlineCount">0</span> People online
+                    </div>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    </div>
+                <div class="chat-input">
+                    <div class="action-buttons">
+                        <div class="action-btn" id="emojiButton">
+                            <i class="far fa-smile"></i>
+                        </div>
+                        <div class="action-btn" id="imageButton">
+                            <i class="far fa-image"></i>
+                        </div>
+                        <div class="action-btn" id="videoButton">
+                            <i class="fas fa-video"></i>
+                        </div>
+                    </div>
+                    <input type="text" class="message-input" id="messageInput" placeholder="Enter message ..">
+                    <div class="send-btn" id="sendMessage">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+
+                    <div class="emoji-panel" id="emojiPanel">
+                        <span data-emoji="1">😂</span>
+                        <span data-emoji="2">😭</span>
+                        <span data-emoji="3">❤️</span>
+                        <span data-emoji="4">👍</span>
+                        <span data-emoji="5">🎉</span>
+                        <span data-emoji="6">🤔</span>
+                        <span data-emoji="7">😡</span>
+                        <span data-emoji="8">🤩</span>
+                        <span data-emoji="9">🙏</span>
+                        <span data-emoji="10">💯</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="imageFileInput" accept="image/*" style="display: none;">
+    <input type="file" id="videoFileInput" accept="video/*" style="display: none;">
+
+    <script src="script.js"></script>
+</body>
+</html>
