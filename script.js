@@ -139,7 +139,7 @@ class ChatApp {
         }
         
         // 创建WebSocket连接
-        this.socket = new WebSocket('https://freechatroom.kazane.cloudns.club/');
+        this.socket = new WebSocket('wss://freechatroom.kazane.cloudns.club/');
         
         // 连接建立时
         this.socket.onopen = () => {
@@ -347,5 +347,6 @@ class ChatApp {
 document.addEventListener('DOMContentLoaded', () => {
     new ChatApp();
 });
+
 
 
